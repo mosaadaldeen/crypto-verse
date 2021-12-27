@@ -19,8 +19,6 @@ const CryptoDetails = () => {
   const { data: coinHistory } = useGetCryptoHistoryQuery({ coinId, timePeriod });
   const cryptoDetails = data?.data?.coin;
 
-  console.log(coinHistory);
-
   if (isFetching) return <Loader />;
 
   const time = ['3h', '24h', '7d', '30d', '3m','1y', '3y', '5y'];
@@ -45,7 +43,7 @@ const CryptoDetails = () => {
     <Col className="coin-detail-container">
       <Col className="coin-heading-container">
         <Title level={2} className="coin-name">
-          {data?.data?.coin.name} ({data?.data?.coin.slug}) Price
+          {cryptoDetails.name} ({cryptoDetails.slug}) Price
         </Title>
         <p>{cryptoDetails.name} live price in US Dollar (USD). View value statistics, market cap and supply.</p>
       </Col>
@@ -59,13 +57,13 @@ const CryptoDetails = () => {
             <Title level={3} className="coin-details-heading">{cryptoDetails.name} Value Statistics</Title>
             <p>An overview showing the statistics of {cryptoDetails.name}, such as the base and quote currency, the rank, and trading volume.</p>
           </Col>
-          {stats.map(({ icon, title, value }) => (
-            <Col className="coin-stats">
+          {stats.map((stat) => (
+            <Col className="coin-stats" key={stat.title}>
               <Col className="coin-stats-name">
-                <Text>{icon}</Text>
-                <Text>{title}</Text>
+                <Text>{stat.icon}</Text>
+                <Text>{stat.title}</Text>
               </Col>
-              <Text className="stats">{value}</Text>
+              <Text className="stats">{stat.value}</Text>
             </Col>
           ))}
         </Col>
@@ -75,7 +73,7 @@ const CryptoDetails = () => {
             <p>An overview showing the statistics of {cryptoDetails.name}, such as the base and quote currency, the rank, and trading volume.</p>
           </Col>
           {genericStats.map(({ icon, title, value }) => (
-            <Col className="coin-stats">
+            <Col className="coin-stats" key={title}>
               <Col className="coin-stats-name">
                 <Text>{icon}</Text>
                 <Text>{title}</Text>

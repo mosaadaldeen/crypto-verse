@@ -12,7 +12,6 @@ const { Panel } = Collapse;
 export const Exchanges = () => {
   const { data, isFetching } = useGetExchangeQuery();
   const exchangesList = data?.data?.exchanges;
-  // const style = { background: '#0092ff', padding: '8px 0' };
   
   if (isFetching) return <Loader />;
 
